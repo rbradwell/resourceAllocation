@@ -35,13 +35,13 @@ An OP is given a skill level for each workstation in their zone. A skill level c
 
 ## Optimization 
 
-- Try an optimise solution so that all workstations are to be operated by 3 different O/Ps per shift.
+Try to optimise the solution so that all workstations are to be operated by 3 different O/Ps per shift.
 
 ## Data
 
 Currently a single handcrafted problem is described in the data files operators.txt, skilllevels.txt, workstations.txt.  These can be changed as appropriate and are laid out as follows:
 
-he operators.txt file has a separate line for each operator.  Where each line is in the format; user id, worker type and user name.
+The operators.txt file has a separate line for each operator.  Where each line is in the format; user id, worker type and user name.
 
 e.g.
 
