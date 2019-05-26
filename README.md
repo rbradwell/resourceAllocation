@@ -31,7 +31,7 @@ An OP is given a skill level for each workstation in their zone. A skill level c
 
 - An operator cannot be allocated to more than 2 'B' workstations per shift.
 
-- An operator cannot operate more than one workstation at the same time i.e. in a single slot (don't think you explicitly wrote down this constraint).
+- An operator cannot operate more than one workstation at the same time i.e. in a single slot.
 
 ## Optimization 
 
