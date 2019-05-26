@@ -11,9 +11,11 @@ An employee can have 1 of 2 roles:
     1. Team Leader (TL)
     2. Operator (OP)
 
-In this instance only operators are considered currently, not Team Leaders.
+In this instance only Operators are considered currently, not Team Leaders.
 
 An OP is given a skill level for each workstation in their zone. A skill level can be in the range 0 – 5 – zero implying the operator cannot work at that station.
+ 
+ A workstation has 3 sessions per day i.e. 3 slots that operators may be assigned to.
  
  A workstation is given an ergonomic ranking of A, B, C.
  
