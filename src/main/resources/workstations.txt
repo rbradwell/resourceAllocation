@@ -1,0 +1,4 @@
+1,wkst1,A
+2,wkst2,B
+3,wkst3,A
+4,wkst4,B
