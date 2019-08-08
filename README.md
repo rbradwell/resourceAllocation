@@ -65,4 +65,4 @@ oper5,wkst4,TWO
  
 ## Executing code
 
-The code is a simple Java application that should be run within the IDE currently.
+The code is a simple Java application that should be run within the IDE currently.  The ResourceAllocation class has a main method.
