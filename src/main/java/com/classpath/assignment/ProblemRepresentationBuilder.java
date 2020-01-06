@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.classpath.assignment.constraints.ConstraintIF;
-import com.classpath.assignment.constraints.EvaluationFunction;
+import com.classpath.assignment.ga.EvaluationFunction;
 import com.classpath.assignment.constraints.IntSetDom;
 import com.classpath.assignment.constraints.Variable;
 import com.classpath.assignment.constraints.generator.FollowsConGenerator;
@@ -44,7 +44,7 @@ public class ProblemRepresentationBuilder {
 	public ProblemRepresentationBuilder addWorkstations(List<String> lines) {
 		List<Workstation> wkstns = createWkstns(lines) ;
 		wkstns.sort((Workstation wk1, Workstation wk2) -> wk1.getId().compareTo(wk2.getId()));
-		this.workstationTimeSlots = new WorkstationTimeSlots(wkstns) ;
+		this.workstationTimeSlots = new WorkstationTimeSlots(createWkstns(lines)) ;
 		return this ;
 	}
 	

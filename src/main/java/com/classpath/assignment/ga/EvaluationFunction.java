@@ -1,8 +1,10 @@
-package com.classpath.assignment.constraints;
+package com.classpath.assignment.ga;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.classpath.assignment.constraints.ConstraintIF;
+import com.classpath.assignment.constraints.Variable;
 import com.classpath.assignment.model.Solution;
 
 public class EvaluationFunction {

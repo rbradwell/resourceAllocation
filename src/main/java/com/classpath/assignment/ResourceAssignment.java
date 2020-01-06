@@ -7,8 +7,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.classpath.assignment.constraints.EvaluationFunction;
-import com.classpath.assignment.constraints.Variable;
 import com.classpath.assignment.ga.GeneticAlgorithm;
 
 public class ResourceAssignment {

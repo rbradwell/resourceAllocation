@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import com.classpath.assignment.constraints.ConstraintIF;
-import com.classpath.assignment.constraints.EvaluationFunction;
 import com.classpath.assignment.constraints.Variable;
 import com.classpath.assignment.model.Solution;
 
