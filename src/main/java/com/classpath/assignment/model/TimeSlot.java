@@ -1,11 +1,11 @@
 package com.classpath.assignment.model;
 
-public class WorkstationTimeSlot {
+public class TimeSlot {
 
 	private int pos ;
 	private Workstation workstation ;
 	
-	public WorkstationTimeSlot(int pos, Workstation workstation) {
+	public TimeSlot(int pos, Workstation workstation) {
 		this.pos = pos ;
 		this.workstation = workstation ;
 	}
