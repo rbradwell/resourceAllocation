@@ -7,12 +7,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.classpath.assignment.constraints.EvaluationFunction;
+import com.classpath.assignment.constraints.Variable;
 import com.classpath.assignment.ga.GeneticAlgorithm;
 
 public class ResourceAssignment {
 
 	private void run() throws IOException {
-		new GeneticAlgorithm(readFile("workstations.txt"), readFile("operators.txt"), readFile("skilllevels.txt")) ;
+		ProblemRepresentationBuilder builder = new ProblemRepresentationBuilder()
+				.addWorkstations(readFile("workstations.txt"))
+				.addWorkers(readFile("operators.txt"))
+				.addOperatorSkillLevels(readFile("skilllevels.txt"));
+		new GeneticAlgorithm(builder.createVariables().getVariables(), builder.getEvalFunction()) ;
 	}
 	
 	private List<String> readFile(String filename) throws IOException {

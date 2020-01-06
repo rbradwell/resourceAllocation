@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.classpath.assignment.ProblemRepresentationBuilder;
+import com.classpath.assignment.constraints.ConstraintIF;
 import com.classpath.assignment.constraints.EvaluationFunction;
 import com.classpath.assignment.constraints.Variable;
 import com.classpath.assignment.model.Solution;
@@ -16,20 +16,13 @@ public class GeneticAlgorithm {
 	
 	private static final int POPULATION_SIZE = 10000 ;
 	private static final int GENERATIONS = 1000 ;
-	private List<Solution> population ;
+	private List<Solution> population = new ArrayList<>();
 	private int bestCost ;
 	private boolean hasBest ;
-	
-	public GeneticAlgorithm(List<String> workstationLines, List<String> workerLines, List<String> operatorSkillLevels) {
-		population = new ArrayList<>() ;
-		ProblemRepresentationBuilder builder = new ProblemRepresentationBuilder() ;
-		this.variables = builder
-									.addWorkstations(workstationLines)
-									.addWorkers(workerLines)
-									.addOperatorSkillLevels(operatorSkillLevels)
-									.createVariables()
-									.getVariables() ;		
-		evalFn = builder.getEvalFunction() ;
+
+	public GeneticAlgorithm(List<Variable> variables, EvaluationFunction evalFn) {
+		this.variables = variables;
+		this.evalFn = evalFn;
 		evolve() ;
 		System.out.println("Finished");
 	}
@@ -75,10 +68,32 @@ public class GeneticAlgorithm {
 			bestCost = solution.getCost() ;
 			System.out.println(String.format("NEW BEST SOLUTION with value of %d ", bestCost));
 			System.out.println(solution.toString());
-			System.out.println(evalFn.dumpConstraintViolations(solution));
+			System.out.println(dumpConstraintViolations(solution));
 		}
 	}
-	
+
+	public String dumpConstraintViolations(Solution solution) {
+		StringBuffer sb = new StringBuffer() ;
+		List<ConstraintIF> violated = evalFn.getHardConstraintsViolated(solution);
+		if (!violated.isEmpty()) {
+			sb.append("The following constraints were violated\n") ;
+			sb.append(dumpConstraints(solution, violated)) ;
+		}
+		violated = evalFn.getSoftConstraintsViolated(solution);
+		if (!violated.isEmpty()) {
+			sb.append("The following soft constraints were violated\n") ;
+			sb.append(dumpConstraints(solution, violated)) ;
+		}
+		return sb.toString() ;
+	}
+
+	private String dumpConstraints(Solution solution, List<ConstraintIF> cons) {
+		StringBuffer sb = new StringBuffer() ;
+		for (ConstraintIF con : cons) {
+			sb.append(con.debugEval(solution.getVariableAssignments())) ;
+		}
+		return sb.toString() ;
+	}
 
 	private int evaluateSolution(Solution solution) {
 		int eval = evalFn.eval(solution) ;

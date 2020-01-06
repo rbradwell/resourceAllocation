@@ -8,7 +8,7 @@ public class Workstations {
 
 	public static int NO_OF_SESSIONS = 3 ;
 	
-	private List<PositionedWorkstation> workstations ;
+	private List<WorkstationTimeSlot> workstations ;
 	
 	public Workstations() {
 		workstations = new ArrayList<>() ;
@@ -22,19 +22,19 @@ public class Workstations {
 	private void addWorkstations(List<Workstation> wkstns) {
 		for (Workstation workstation : wkstns) {
 			int pos = this.workstations.size() * NO_OF_SESSIONS ;
-			this.workstations.add(new PositionedWorkstation(pos, workstation)) ;
+			this.workstations.add(new WorkstationTimeSlot(pos, workstation)) ;
 		}
 	}
 		
-	public List<PositionedWorkstation> getAll() {
+	public List<WorkstationTimeSlot> getAll() {
 		return workstations ;
 	}
 	
-	public List<PositionedWorkstation> getAllWithRanking(ErgonomicRanking ranking) {
+	public List<WorkstationTimeSlot> getAllWithRanking(ErgonomicRanking ranking) {
 		return workstations.stream().filter(pw -> pw.getWorkstation().getRanking().equals(ranking)).collect(Collectors.toList()) ;
 	}
 
-	public List<PositionedWorkstation> getWorkstations() {
+	public List<WorkstationTimeSlot> getWorkstations() {
 		return workstations;
 	}
 	

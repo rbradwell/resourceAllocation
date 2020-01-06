@@ -42,28 +42,14 @@ public class EvaluationFunction {
 		return result ;
 	}
 
-	public String dumpConstraintViolations(Solution solution) {
+	public List<ConstraintIF> getHardConstraintsViolated(Solution solution) {
 		List<Variable> variableAssignments = solution.getVariableAssignments() ;
-		StringBuffer sb = new StringBuffer() ;
-		List<ConstraintIF> violated = null ;
-		violated = getViolated(cons, variableAssignments) ;
-		if (!violated.isEmpty()) {
-			sb.append("The following constraints were violated\n") ;
-			sb.append(dumpConstraints(solution, violated)) ;
-		}
-		violated = getViolated(cost, variableAssignments) ;
-		if (!violated.isEmpty()) {
-			sb.append("The following soft constraints were violated\n") ;
-			sb.append(dumpConstraints(solution, violated)) ;
-		}
-		return sb.toString() ;
+		return getViolated(cons, variableAssignments) ;
 	}
-	
-	private String dumpConstraints(Solution solution, List<ConstraintIF> cons) {
-		StringBuffer sb = new StringBuffer() ;
-		for (ConstraintIF con : cons) {
-			sb.append(con.debugEval(solution.getVariableAssignments())) ;
-		}
-		return sb.toString() ;
+
+	public List<ConstraintIF> getSoftConstraintsViolated(Solution solution) {
+		List<Variable> variableAssignments = solution.getVariableAssignments() ;
+		return getViolated(cost, variableAssignments) ;
 	}
+
 }

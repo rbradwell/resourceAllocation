@@ -17,7 +17,7 @@ import com.classpath.assignment.constraints.generator.OnePerSlotConGenerator;
 import com.classpath.assignment.constraints.generator.PerShiftConGenerator;
 import com.classpath.assignment.constraints.generator.SlotsDiffConGenerator;
 import com.classpath.assignment.model.ErgonomicRanking;
-import com.classpath.assignment.model.PositionedWorkstation;
+import com.classpath.assignment.model.WorkstationTimeSlot;
 import com.classpath.assignment.model.SkillLevel;
 import com.classpath.assignment.model.Worker;
 import com.classpath.assignment.model.WorkerRole;
@@ -84,7 +84,7 @@ public class ProblemRepresentationBuilder {
 			String operName = wDetails[0] ;
 			String wkstationName = wDetails[1] ;
 			String skill = wDetails[2] ;
-			Optional<PositionedWorkstation> wks = this.workstations.getWorkstations().stream().filter(w -> w.getWorkstation().getName().equals(wkstationName)).findFirst() ;
+			Optional<WorkstationTimeSlot> wks = this.workstations.getWorkstations().stream().filter(w -> w.getWorkstation().getName().equals(wkstationName)).findFirst() ;
 			if (!wks.isPresent()) {
 				throw new RuntimeException("No workstation named " + wkstationName) ;
 			}
@@ -126,7 +126,7 @@ public class ProblemRepresentationBuilder {
 	private List<Variable> createUnassignedVariables() {
 		List<Variable> variables = new ArrayList<>() ;
 		Map<String, Variable> variableDomainMap = createVariableDomains() ;
-		for (PositionedWorkstation workstation : workstations.getWorkstations()) {
+		for (WorkstationTimeSlot workstation : workstations.getWorkstations()) {
 			// each workstation has 3 sessions
 			Variable var = variableDomainMap.get(workstation.getWorkstation().getId()) ;
 			for (int i=0;i<Workstations.NO_OF_SESSIONS;i++) {
@@ -141,7 +141,7 @@ public class ProblemRepresentationBuilder {
 	}
 
 
-	private Set<String> getWorkerIdsOnWorkstations(List<PositionedWorkstation> workstations, 
+	private Set<String> getWorkerIdsOnWorkstations(List<WorkstationTimeSlot> workstations,
 													List<WorkerWorkstationLevel> workerWorkstationLevel) {
 		Set<String> workstationIds = workstations.stream().map(w -> w.getWorkstation().getId()).collect(Collectors.toSet()) ;
 		return workerWorkstationLevel.stream().filter(wwl -> workstationIds.contains(wwl.getWorkstation().getId()))
@@ -150,9 +150,9 @@ public class ProblemRepresentationBuilder {
 
 	public EvaluationFunction getEvalFunction() {
 		List<ConstraintIF> cons = new ArrayList<>() ;
-		List<PositionedWorkstation> allWorkstations = workstations.getAll() ;
-		List<PositionedWorkstation> aWorkstations = workstations.getAllWithRanking(ErgonomicRanking.A) ;
-		List<PositionedWorkstation> bWorkstations = workstations.getAllWithRanking(ErgonomicRanking.B) ;
+		List<WorkstationTimeSlot> allWorkstations = workstations.getAll() ;
+		List<WorkstationTimeSlot> aWorkstations = workstations.getAllWithRanking(ErgonomicRanking.A) ;
+		List<WorkstationTimeSlot> bWorkstations = workstations.getAllWithRanking(ErgonomicRanking.B) ;
 		Set<String> aWorkstationUserIds = getWorkerIdsOnWorkstations(aWorkstations, workerWorkstationLevel) ;
 		Set<String> bWorkstationUserIds = getWorkerIdsOnWorkstations(bWorkstations, workerWorkstationLevel) ;
 		cons.addAll(new OnePerSlotConGenerator(allWorkstations).getConstraints()) ;

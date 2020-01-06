@@ -4,23 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import com.classpath.assignment.constraints.ConstraintIF;
-import com.classpath.assignment.constraints.IntSetDom;
-import com.classpath.assignment.constraints.Variable;
-import com.classpath.assignment.constraints.generator.FollowsConGenerator;
-import com.classpath.assignment.constraints.generator.OnePerSlotConGenerator;
-import com.classpath.assignment.constraints.generator.PerShiftConGenerator;
-import com.classpath.assignment.constraints.generator.SlotsDiffConGenerator;
-import com.classpath.assignment.model.ErgonomicRanking;
-import com.classpath.assignment.model.PositionedWorkstation;
-import com.classpath.assignment.model.Workstation;
-import com.classpath.assignment.model.Workstations;
 
 public class AppTest {
 	

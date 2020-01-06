@@ -15,11 +15,7 @@ public class IntSetDom {
 		domainValues = new HashSet<String>() ;
 		dom.getDomainValues().forEach(v -> domainValues.add(v));
 	}
-	
-	public IntSetDom(Set<String> domainValues) {
-		this.domainValues = domainValues ;
-	}
-	
+
 	public void addDomVal(String val) {
 		domainValues.add(val) ;
 	}
