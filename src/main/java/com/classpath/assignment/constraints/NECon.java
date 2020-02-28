@@ -54,17 +54,12 @@ public class NECon implements ConstraintIF {
 		}
 		
 		NECon other = (NECon) obj ;
-		if (other.getPos1() == this.getPos1() && other.getPos2() == this.getPos2()) {
-			return true ;
-		}
-		return false;
+		return other.getPos1() == this.getPos1() && other.getPos2() == this.getPos2();
 	}
 
 	@Override
 	public String debugEval(List<Variable> solution) {
-		StringBuffer sb = new StringBuffer() ;
-		sb.append(String.format("Not Equals constraint violation - pos %s and pos %s have the same value of %s \n", this.pos1, this.pos2, solution.get(pos2).getValue())) ;
-		return sb.toString() ;
+		return String.format("Not Equals constraint violation - pos %s and pos %s have the same value of %s \n", this.pos1, this.pos2, solution.get(pos2).getValue());
 	}
 	
 }

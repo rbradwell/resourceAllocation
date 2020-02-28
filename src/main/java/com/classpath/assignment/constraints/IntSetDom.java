@@ -13,7 +13,7 @@ public class IntSetDom {
 	
 	public IntSetDom(IntSetDom dom) {
 		domainValues = new HashSet<String>() ;
-		dom.getDomainValues().forEach(v -> domainValues.add(v));
+		domainValues.addAll(dom.getDomainValues());
 	}
 
 	public void addDomVal(String val) {

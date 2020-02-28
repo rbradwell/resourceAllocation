@@ -47,14 +47,9 @@ public class Worker {
 		
 		Worker other = (Worker) obj ;
 		if (id == null) {
-			if (other.id != null) {
-				return false ;
-			}
+			return other.id == null;
 		}
 
-		if (!id.equals(other.id)) {
-			return false;
-		}
-		return true;
+		return id.equals(other.id);
 	}
 }

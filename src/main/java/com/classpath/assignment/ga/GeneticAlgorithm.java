@@ -72,7 +72,7 @@ public class GeneticAlgorithm {
 	}
 
 	public String dumpConstraintViolations(Solution solution) {
-		StringBuffer sb = new StringBuffer() ;
+		StringBuilder sb = new StringBuilder() ;
 		List<ConstraintIF> violated = evalFn.getHardConstraintsViolated(solution);
 		if (!violated.isEmpty()) {
 			sb.append("The following constraints were violated\n") ;
@@ -87,18 +87,17 @@ public class GeneticAlgorithm {
 	}
 
 	private String dumpConstraints(Solution solution, List<ConstraintIF> cons) {
-		StringBuffer sb = new StringBuffer() ;
+		StringBuilder sb = new StringBuilder() ;
 		for (ConstraintIF con : cons) {
 			sb.append(con.debugEval(solution.getVariableAssignments())) ;
 		}
 		return sb.toString() ;
 	}
 
-	private int evaluateSolution(Solution solution) {
+	private void evaluateSolution(Solution solution) {
 		int eval = evalFn.eval(solution) ;
 		solution.setCost(eval);
 		updateBestSoFar(solution) ;
-		return eval ;
 	}
 	
 }

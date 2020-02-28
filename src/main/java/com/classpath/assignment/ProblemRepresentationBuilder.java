@@ -1,11 +1,6 @@
 package com.classpath.assignment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.classpath.assignment.constraints.ConstraintIF;
@@ -43,7 +38,7 @@ public class ProblemRepresentationBuilder {
 	
 	public ProblemRepresentationBuilder addWorkstations(List<String> lines) {
 		List<Workstation> wkstns = createWkstns(lines) ;
-		wkstns.sort((Workstation wk1, Workstation wk2) -> wk1.getId().compareTo(wk2.getId()));
+		wkstns.sort(Comparator.comparing(Workstation::getId));
 		this.workstationTimeSlots = new WorkstationTimeSlots(createWkstns(lines)) ;
 		return this ;
 	}

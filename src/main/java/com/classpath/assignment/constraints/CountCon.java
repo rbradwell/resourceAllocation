@@ -25,7 +25,7 @@ public class CountCon implements ConstraintIF {
 
 	@Override
 	public String debugEval(List<Variable> solution) {
-		StringBuffer sb = new StringBuffer() ;
+		StringBuilder sb = new StringBuilder() ;
 		
 		long count = positions.stream()
 				.map(pos -> solution.get(pos).getValue())
@@ -37,7 +37,7 @@ public class CountCon implements ConstraintIF {
 	}
 
 	private String getPosAsString() {
-		StringBuffer sb = new StringBuffer() ;
+		StringBuilder sb = new StringBuilder() ;
 		for (Integer pos : positions) {
 			sb.append(pos).append(" ") ;
 		}
