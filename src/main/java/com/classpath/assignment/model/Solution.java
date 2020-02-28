@@ -7,31 +7,31 @@ import java.util.Set;
 
 import com.classpath.assignment.constraints.Variable;
 
-public class Solution {
+public class Solution<T> {
 
-	private List<Variable> variableAssignments ;
+	private List<Variable<T>> variableAssignments ;
 	private int cost ;
 	
-	public Solution(List<Variable> varAssgn) {
+	public Solution(List<Variable<T>> varAssgn) {
 		variableAssignments = new ArrayList<>() ;
-		varAssgn.forEach(a -> this.variableAssignments.add(new Variable(a)));
+		varAssgn.forEach(a -> this.variableAssignments.add(new Variable<T>(a)));
 	}
 
-	public List<Variable> getVariableAssignments() {
+	public List<Variable<T>> getVariableAssignments() {
 		return variableAssignments;
 	}
 
-	public String getVariableValueAtPos(int pos) {
+	public T getVariableValueAtPos(int pos) {
 		return this.variableAssignments.get(pos).getValue() ;
 	}
 	
-	public void setVariableValue(int pos, String value) {
+	public void setVariableValue(int pos, T value) {
 		this.variableAssignments.get(pos).setValue(value);
 	}
 
-	public Solution reproduce(Solution otherParent) {
-		Solution child = new Solution(this.variableAssignments) ;
-		String childVal = null ;
+	public Solution<T> reproduce(Solution<T> otherParent) {
+		Solution<T> child = new Solution<T>(this.variableAssignments) ;
+		T childVal = null ;
 		for (int pos=0; pos<child.getVariableAssignments().size();pos++) {
 			if (new Random().nextInt(2) == 0) { 
 				childVal = this.getVariableValueAtPos(pos) ;
@@ -44,12 +44,12 @@ public class Solution {
 	}	
 	
 	public void random() {
-		for (Variable var : variableAssignments) {
-			Set<String> domValues = var.getDomain().getDomainValues() ;
+		for (Variable<T> var : variableAssignments) {
+			Set<T> domValues = var.getDomain().getDomainValues() ;
 			int randPos = new Random().nextInt(domValues.size()) ;
-			String picked = null ;
+			T picked = null ;
 			int i = 0 ;
-			for (String dv : domValues) {
+			for (T dv : domValues) {
 				if (i == randPos) {
 					picked = dv ;
 					break ;
@@ -69,9 +69,9 @@ public class Solution {
 	}
 
 	public String toString() {
-		StringBuffer sb = new StringBuffer() ;
+		StringBuilder sb = new StringBuilder() ;
 		sb.append("\n+++ Solution +++\n") ;
-		for (Variable var : variableAssignments) {
+		for (Variable<T> var : variableAssignments) {
 			sb.append(var.getValue()) ;
 			sb.append(" ") ;
 		}

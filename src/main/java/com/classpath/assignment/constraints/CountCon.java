@@ -15,7 +15,7 @@ public class CountCon implements ConstraintIF {
 	}
 	
 	@Override
-	public int eval(List<Variable> solution) {
+	public int eval(List<Variable<String>> solution) {
 		long count = positions.stream()
 				.map(pos -> solution.get(pos).getValue())
 				.filter(val -> val.equals(this.valueToCount))
@@ -24,7 +24,7 @@ public class CountCon implements ConstraintIF {
 	}
 
 	@Override
-	public String debugEval(List<Variable> solution) {
+	public String debugEval(List<Variable<String>> solution) {
 		StringBuilder sb = new StringBuilder() ;
 		
 		long count = positions.stream()

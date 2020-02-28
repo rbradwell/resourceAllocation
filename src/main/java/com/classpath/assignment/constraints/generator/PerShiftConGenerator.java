@@ -12,12 +12,7 @@ public class PerShiftConGenerator extends AbstractConstraintsGenerator implement
 
 	private List<Integer> pos ;
 	private int maxCount = 0 ;
-	
-	/**
-	 *
-	 * 
-	 * @param workstation - all workstations of certain ergonomic type
-	 */
+
 	public PerShiftConGenerator(List<TimeSlot> workstations, Set<String> workerIds, int maxCount) {
 		this.maxCount = maxCount ;
 		cons = new ArrayList<>() ;

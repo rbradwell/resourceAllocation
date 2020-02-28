@@ -10,16 +10,16 @@ import com.classpath.assignment.model.Solution;
 
 public class GeneticAlgorithm {
 
-	private List<Variable> variables ;
+	private List<Variable<String>> variables ;
 	private EvaluationFunction evalFn ;
 	
 	private static final int POPULATION_SIZE = 10000 ;
 	private static final int GENERATIONS = 1000 ;
-	private List<Solution> population = new ArrayList<>();
+	private List<Solution<String>> population = new ArrayList<>();
 	private int bestCost ;
 	private boolean hasBest ;
 
-	public GeneticAlgorithm(List<Variable> variables, EvaluationFunction evalFn) {
+	public GeneticAlgorithm(List<Variable<String>> variables, EvaluationFunction evalFn) {
 		this.variables = variables;
 		this.evalFn = evalFn;
 		evolve() ;
@@ -35,10 +35,10 @@ public class GeneticAlgorithm {
 	
 	private void nextGeneration() {
 		for (int i=0;i<POPULATION_SIZE;i++) {
-			Solution parent1 = population.get(i) ;
+			Solution<String> parent1 = population.get(i) ;
 			int randPos = new Random().nextInt(POPULATION_SIZE) ;
-			Solution parent2 = population.get(randPos) ;
-			Solution child = parent1.reproduce(parent2) ;
+			Solution<String> parent2 = population.get(randPos) ;
+			Solution<String> child = parent1.reproduce(parent2) ;
 			evaluateSolution(child) ;
 			if (parent1.getCost() < parent2.getCost()) {
 				if (child.getCost() < parent1.getCost()) {
@@ -54,14 +54,14 @@ public class GeneticAlgorithm {
 	
 	private void createInitialPopulation() {
 		for (int i=0;i<POPULATION_SIZE;i++) {
-			Solution solution = new Solution(variables) ;
+			Solution<String> solution = new Solution<String>(variables) ;
 			solution.random();
 			evaluateSolution(solution) ;
 			population.add(solution) ;
 		}
 	}
 	
-	private void updateBestSoFar(Solution solution) {
+	private void updateBestSoFar(Solution<String> solution) {
 		if ((solution.getCost() < this.bestCost) || !hasBest) {
 			hasBest = true ;
 			bestCost = solution.getCost() ;
@@ -71,7 +71,7 @@ public class GeneticAlgorithm {
 		}
 	}
 
-	public String dumpConstraintViolations(Solution solution) {
+	public String dumpConstraintViolations(Solution<String> solution) {
 		StringBuilder sb = new StringBuilder() ;
 		List<ConstraintIF> violated = evalFn.getHardConstraintsViolated(solution);
 		if (!violated.isEmpty()) {
@@ -86,7 +86,7 @@ public class GeneticAlgorithm {
 		return sb.toString() ;
 	}
 
-	private String dumpConstraints(Solution solution, List<ConstraintIF> cons) {
+	private String dumpConstraints(Solution<String> solution, List<ConstraintIF> cons) {
 		StringBuilder sb = new StringBuilder() ;
 		for (ConstraintIF con : cons) {
 			sb.append(con.debugEval(solution.getVariableAssignments())) ;
@@ -94,7 +94,7 @@ public class GeneticAlgorithm {
 		return sb.toString() ;
 	}
 
-	private void evaluateSolution(Solution solution) {
+	private void evaluateSolution(Solution<String> solution) {
 		int eval = evalFn.eval(solution) ;
 		solution.setCost(eval);
 		updateBestSoFar(solution) ;

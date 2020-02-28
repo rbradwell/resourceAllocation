@@ -1,30 +1,30 @@
 package com.classpath.assignment.constraints;
 
-public class Variable {
+public class Variable<X> {
 
-	private SetDom<String> domain;
-	private String value ;
+	private SetDom<X> domain;
+	private X value ;
 
-	public Variable(Variable var) {
-		this.value = var.value ;
-		this.domain = new SetDom<>(var.domain) ;
+	public Variable(Variable<X> var) {
+		this.value = var.getValue() ;
+		this.domain = new SetDom<>(var.getDomain()) ;
 	}
-	
-	public Variable(SetDom<String> domain) {
+
+	public Variable(SetDom<X> domain) {
 		this.domain = domain ;
 	}
 
-	public SetDom<String> getDomain() {
+	public SetDom<X> getDomain() {
 		return domain;
 	}
 
-	public void setValue(String val) {
+	public void setValue(X val) {
 		if (this.getDomain().inDomain(val)) {
 			value = val ;
 		}
 	}
 	
-	public String getValue() {
+	public X getValue() {
 		return value;
 	}
 	

@@ -25,7 +25,7 @@ public class ProblemRepresentationBuilder {
 	private WorkstationTimeSlots workstationTimeSlots;
 	private List<Worker> workers ;
 	private List<WorkerWorkstationLevel> workerWorkstationLevel ;
-	private List<Variable> variables ;
+	private List<Variable<String>> variables ;
 	private EvaluationFunction eval ;
 	
 	private Workstation createWorkstation(String details) {
@@ -94,17 +94,17 @@ public class ProblemRepresentationBuilder {
 		return this ;
 	}
 	
-	private Map<String, Variable> createVariableDomains() {
-		Map<String, Variable> workstationVariableMap = new HashMap<>();
+	private Map<String, Variable<String>> createVariableDomains() {
+		Map<String, Variable<String>> workstationVariableMap = new HashMap<>();
 		for (WorkerWorkstationLevel wwl : this.workerWorkstationLevel) {
 			if (wwl.isCanOperate()) {
 				String workstationId = wwl.getWorkstation().getId() ;
-				Variable workstationVar = null ;
+				Variable<String> workstationVar = null ;
 				Worker worker = wwl.getWorker() ;
 				if (workstationVariableMap.containsKey(workstationId)) {
 					workstationVar = workstationVariableMap.get(workstationId) ;
 				} else {
-					workstationVar = new Variable(new SetDom()) ;
+					workstationVar = new Variable<>(new SetDom<>()) ;
 				}
 				workstationVar.getDomain().addDomVal(worker.getId());
 				workstationVariableMap.put(workstationId, workstationVar) ;
@@ -118,20 +118,20 @@ public class ProblemRepresentationBuilder {
 		return this ;
 	}
 	
-	private List<Variable> createUnassignedVariables() {
-		List<Variable> variables = new ArrayList<>() ;
-		Map<String, Variable> variableDomainMap = createVariableDomains() ;
+	private List<Variable<String>> createUnassignedVariables() {
+		List<Variable<String>> variables = new ArrayList<>() ;
+		Map<String, Variable<String>> variableDomainMap = createVariableDomains() ;
 		for (TimeSlot workstation : workstationTimeSlots.getTimeSlots()) {
 			// each workstation has 3 sessions
-			Variable var = variableDomainMap.get(workstation.getWorkstation().getId()) ;
+			Variable<String> var = variableDomainMap.get(workstation.getWorkstation().getId()) ;
 			for (int i = 0; i< WorkstationTimeSlots.NO_OF_TIMESLOTS; i++) {
-				variables.add(new Variable(var)) ;
+				variables.add(new Variable<String>(var)) ;
 			}
 		}
 		return variables ;
 	}
 	
-	public List<Variable> getVariables() {
+	public List<Variable<String>> getVariables() {
 		return variables;
 	}
 

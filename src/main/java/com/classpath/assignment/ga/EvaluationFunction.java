@@ -21,15 +21,15 @@ public class EvaluationFunction {
 		this.cost = cost ;
 	}
 	
-	public int eval(Solution solution) {
-		List<Variable> variableAssignments = solution.getVariableAssignments() ;
+	public int eval(Solution<String> solution) {
+		List<Variable<String>> variableAssignments = solution.getVariableAssignments() ;
 		int v1 = getViolated(cons, variableAssignments).size();
 		int v2 = getViolated(cost, variableAssignments).size();
 		return v1 * v1 + v2;
 	}
 
 	public List<ConstraintIF> getViolated(List<ConstraintIF> cons, 
-											List<Variable> solution) {
+											List<Variable<String>> solution) {
 		List<ConstraintIF> result = new ArrayList<>() ;
 		for (ConstraintIF con : cons) {
 			if (con.eval(solution) == 1) {
@@ -39,13 +39,13 @@ public class EvaluationFunction {
 		return result ;
 	}
 
-	public List<ConstraintIF> getHardConstraintsViolated(Solution solution) {
-		List<Variable> variableAssignments = solution.getVariableAssignments() ;
+	public List<ConstraintIF> getHardConstraintsViolated(Solution<String> solution) {
+		List<Variable<String>> variableAssignments = solution.getVariableAssignments() ;
 		return getViolated(cons, variableAssignments) ;
 	}
 
-	public List<ConstraintIF> getSoftConstraintsViolated(Solution solution) {
-		List<Variable> variableAssignments = solution.getVariableAssignments() ;
+	public List<ConstraintIF> getSoftConstraintsViolated(Solution<String> solution) {
+		List<Variable<String>> variableAssignments = solution.getVariableAssignments() ;
 		return getViolated(cost, variableAssignments) ;
 	}
 

@@ -20,7 +20,7 @@ public class NECon implements ConstraintIF {
 		this.pos2 = pos2 ;
 	}
 	
-	public int eval(List<Variable> solution) {
+	public int eval(List<Variable<String>> solution) {
 		String val1 = solution.get(pos1).getValue() ;
 		String val2 = solution.get(pos2).getValue() ;
 		if (solution.get(pos1) != null && 
@@ -58,7 +58,7 @@ public class NECon implements ConstraintIF {
 	}
 
 	@Override
-	public String debugEval(List<Variable> solution) {
+	public String debugEval(List<Variable<String>> solution) {
 		return String.format("Not Equals constraint violation - pos %s and pos %s have the same value of %s \n", this.pos1, this.pos2, solution.get(pos2).getValue());
 	}
 	
