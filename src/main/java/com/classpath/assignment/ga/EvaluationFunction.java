@@ -15,12 +15,7 @@ public class EvaluationFunction {
 	public EvaluationFunction(List<ConstraintIF> cons, List<ConstraintIF> cost) {
 		init(cons, cost) ;
 	}
-
-	/**
-	 * 
-	 * 
-	 * @param workstations.  All workstations
-	 */
+	
 	private void init(List<ConstraintIF> cons, List<ConstraintIF> cost) {
 		this.cons = cons ;
 		this.cost = cost ;

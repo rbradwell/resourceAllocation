@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.classpath.assignment.constraints.ConstraintIF;
 import com.classpath.assignment.ga.EvaluationFunction;
-import com.classpath.assignment.constraints.IntSetDom;
+import com.classpath.assignment.constraints.SetDom;
 import com.classpath.assignment.constraints.Variable;
 import com.classpath.assignment.constraints.generator.FollowsConGenerator;
 import com.classpath.assignment.constraints.generator.OnePerSlotConGenerator;
@@ -104,7 +104,7 @@ public class ProblemRepresentationBuilder {
 				if (workstationVariableMap.containsKey(workstationId)) {
 					workstationVar = workstationVariableMap.get(workstationId) ;
 				} else {
-					workstationVar = new Variable(new IntSetDom()) ;
+					workstationVar = new Variable(new SetDom()) ;
 				}
 				workstationVar.getDomain().addDomVal(worker.getId());
 				workstationVariableMap.put(workstationId, workstationVar) ;
@@ -144,6 +144,17 @@ public class ProblemRepresentationBuilder {
 	}
 
 	public EvaluationFunction getEvalFunction() {
+		if (this.eval == null) {
+			this.eval = new EvaluationFunction(generateHardConstraints(), generateSoftConstraints()) ;
+		}
+		return this.eval ;
+	}
+
+	private List<ConstraintIF> generateSoftConstraints() {
+		return new SlotsDiffConGenerator(workstationTimeSlots.getAll()).getConstraints();
+	}
+
+	private List<ConstraintIF> generateHardConstraints() {
 		List<ConstraintIF> cons = new ArrayList<>() ;
 		List<TimeSlot> allWorkstations = workstationTimeSlots.getAll() ;
 		List<TimeSlot> aWorkstations = workstationTimeSlots.getAllWithRanking(ErgonomicRanking.A) ;
@@ -154,10 +165,7 @@ public class ProblemRepresentationBuilder {
 		cons.addAll(new FollowsConGenerator(aWorkstations, bWorkstations).getConstraints()) ;
 		cons.addAll(new PerShiftConGenerator(aWorkstations,aWorkstationUserIds, 1).getConstraints()) ;
 		cons.addAll(new PerShiftConGenerator(bWorkstations,bWorkstationUserIds, 2).getConstraints()) ;
-		if (this.eval == null) {
-			eval = new EvaluationFunction(cons, new SlotsDiffConGenerator(allWorkstations).getConstraints()) ;	
-		}
-		return eval ;
+		return cons;
 	}
 
 }

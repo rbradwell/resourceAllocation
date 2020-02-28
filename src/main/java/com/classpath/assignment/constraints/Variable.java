@@ -2,19 +2,19 @@ package com.classpath.assignment.constraints;
 
 public class Variable {
 
-	private IntSetDom domain;
+	private SetDom<String> domain;
 	private String value ;
 
 	public Variable(Variable var) {
 		this.value = var.value ;
-		this.domain = new IntSetDom(var.domain) ;
+		this.domain = new SetDom<>(var.domain) ;
 	}
 	
-	public Variable(IntSetDom domain) {
+	public Variable(SetDom<String> domain) {
 		this.domain = domain ;
 	}
 
-	public IntSetDom getDomain() {
+	public SetDom<String> getDomain() {
 		return domain;
 	}
 

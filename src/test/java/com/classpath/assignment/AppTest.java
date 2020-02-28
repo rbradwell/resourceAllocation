@@ -1,4 +1,4 @@
-package com.nissan.assignment;
+package com.classpath.assignment;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
