@@ -29,42 +29,18 @@ public class WorkerWorkstationLevel {
 		return skillLevel;
 	}
 
-	/**
-	 * 
-	 * A skill level of 4 or 5 can be a trainer
-	 * 
-	 * @return
-	 */
 	public boolean isCanBeTrainer() {
 		return skillLevel == SkillLevel.FOUR || skillLevel == SkillLevel.FIVE ;	
 	}
 
-	/**
-	 * 
-	 * A skill level of zero can only be on a workstation if being trained (accompanied by a trainer)
-	 * 
-	 * @return
-	 */
 	public boolean isCanTrain() {
 		return skillLevel.equals(SkillLevel.ZERO);		
 	}
-	
-	/**
-	 * 
-	 * A skill level applicable to be able to man workstation with supervision
-	 * 
-	 * @return
-	 */
+
 	public boolean isCanOperateWithSupervision() {
 		return skillLevel.equals(SkillLevel.ONE);
 	}
 
-	/**
-	 * 
-	 * A skill level applicable to be able to man workstation without training or supervision
-	 * 
-	 * @return
-	 */
 	public boolean isCanOperate() {
 		
 		Set<SkillLevel> skillSets = new HashSet<SkillLevel>() ;

@@ -22,10 +22,6 @@ public class Workstation {
 		return name;
 	}
 
-	public static int getNoOfSessions() {
-		return NO_OF_SESSIONS;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -54,9 +50,7 @@ public class Workstation {
 		
 		Workstation other = (Workstation) obj ;
 		if (name == null) {
-			if (other.name != null) {
-				return false ;
-			}
+			return other.name == null;
 		}
 
 		return name.equals(other.name);

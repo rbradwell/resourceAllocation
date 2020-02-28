@@ -2,15 +2,8 @@ package com.classpath.assignment;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-import com.classpath.assignment.constraints.ConstraintIF;
-import com.classpath.assignment.ga.EvaluationFunction;
 import com.classpath.assignment.constraints.SetDom;
 import com.classpath.assignment.constraints.Variable;
-import com.classpath.assignment.constraints.generator.FollowsConGenerator;
-import com.classpath.assignment.constraints.generator.OnePerSlotConGenerator;
-import com.classpath.assignment.constraints.generator.PerShiftConGenerator;
-import com.classpath.assignment.constraints.generator.SlotsDiffConGenerator;
 import com.classpath.assignment.model.ErgonomicRanking;
 import com.classpath.assignment.model.TimeSlot;
 import com.classpath.assignment.model.SkillLevel;
@@ -26,8 +19,7 @@ public class ProblemRepresentationBuilder {
 	private List<Worker> workers ;
 	private List<WorkerWorkstationLevel> workerWorkstationLevel ;
 	private List<Variable<String>> variables ;
-	private EvaluationFunction eval ;
-	
+
 	private Workstation createWorkstation(String details) {
 		String[] wDetails = details.split(",") ;
 		String id = wDetails[0] ;
@@ -42,7 +34,15 @@ public class ProblemRepresentationBuilder {
 		this.workstationTimeSlots = new WorkstationTimeSlots(createWkstns(lines)) ;
 		return this ;
 	}
-	
+
+	public List<WorkerWorkstationLevel> getWorkerWorkstationLevel() {
+		return workerWorkstationLevel;
+	}
+
+	public WorkstationTimeSlots getWorkstationTimeSlots() {
+		return workstationTimeSlots;
+	}
+
 	public List<Workstation> createWkstns(List<String> lines) {
 		List<Workstation> result = new ArrayList<>() ;
 		for (String line : lines) {
@@ -122,7 +122,6 @@ public class ProblemRepresentationBuilder {
 		List<Variable<String>> variables = new ArrayList<>() ;
 		Map<String, Variable<String>> variableDomainMap = createVariableDomains() ;
 		for (TimeSlot workstation : workstationTimeSlots.getTimeSlots()) {
-			// each workstation has 3 sessions
 			Variable<String> var = variableDomainMap.get(workstation.getWorkstation().getId()) ;
 			for (int i = 0; i< WorkstationTimeSlots.NO_OF_TIMESLOTS; i++) {
 				variables.add(new Variable<String>(var)) ;
@@ -135,37 +134,11 @@ public class ProblemRepresentationBuilder {
 		return variables;
 	}
 
-
-	private Set<String> getWorkerIdsOnWorkstations(List<TimeSlot> workstations,
+	public Set<String> getWorkerIdsOnWorkstations(List<TimeSlot> workstations,
 													List<WorkerWorkstationLevel> workerWorkstationLevel) {
 		Set<String> workstationIds = workstations.stream().map(w -> w.getWorkstation().getId()).collect(Collectors.toSet()) ;
 		return workerWorkstationLevel.stream().filter(wwl -> workstationIds.contains(wwl.getWorkstation().getId()))
 										.map(wwl -> wwl.getWorker().getId()).collect(Collectors.toSet()) ;
-	}
-
-	public EvaluationFunction getEvalFunction() {
-		if (this.eval == null) {
-			this.eval = new EvaluationFunction(generateHardConstraints(), generateSoftConstraints()) ;
-		}
-		return this.eval ;
-	}
-
-	private List<ConstraintIF> generateSoftConstraints() {
-		return new SlotsDiffConGenerator(workstationTimeSlots.getAll()).getConstraints();
-	}
-
-	private List<ConstraintIF> generateHardConstraints() {
-		List<ConstraintIF> cons = new ArrayList<>() ;
-		List<TimeSlot> allWorkstations = workstationTimeSlots.getAll() ;
-		List<TimeSlot> aWorkstations = workstationTimeSlots.getAllWithRanking(ErgonomicRanking.A) ;
-		List<TimeSlot> bWorkstations = workstationTimeSlots.getAllWithRanking(ErgonomicRanking.B) ;
-		Set<String> aWorkstationUserIds = getWorkerIdsOnWorkstations(aWorkstations, workerWorkstationLevel) ;
-		Set<String> bWorkstationUserIds = getWorkerIdsOnWorkstations(bWorkstations, workerWorkstationLevel) ;
-		cons.addAll(new OnePerSlotConGenerator(allWorkstations).getConstraints()) ;
-		cons.addAll(new FollowsConGenerator(aWorkstations, bWorkstations).getConstraints()) ;
-		cons.addAll(new PerShiftConGenerator(aWorkstations,aWorkstationUserIds, 1).getConstraints()) ;
-		cons.addAll(new PerShiftConGenerator(bWorkstations,bWorkstationUserIds, 2).getConstraints()) ;
-		return cons;
 	}
 
 }

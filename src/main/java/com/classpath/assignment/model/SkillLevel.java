@@ -13,12 +13,10 @@ public enum SkillLevel {
 	
 	private String name ;
 	private boolean canOperate ;
-	private boolean canTrain ;
-	
+
 	private SkillLevel(String name, boolean canOperate, boolean canTrain) {
 		this.name = name ;
 		this.canOperate = canOperate ;
-		this.canTrain = canTrain ;
 	}
 
 	public String getName() {
@@ -27,10 +25,6 @@ public enum SkillLevel {
 
 	public boolean isCanOperate() {
 		return canOperate;
-	}
-
-	public boolean isCanTrain() {
-		return canTrain;
 	}
 
 	public static Optional<SkillLevel> getSkillLevelByName(String name) {
